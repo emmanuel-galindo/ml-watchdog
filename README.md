@@ -8,7 +8,8 @@ Current version only follows MercadoLibre (MELI) articles
 Get a free Atlas account and configure MONGODB_URL using .env.local.example
 If you plan to do Heroku, avoid disclosing your credit card # by following https://emmanuel-galindo.github.io/en/2020/06/05/Avoid-adding-credit-card-in-heroku-to-get-MongoDB/
 
-## All set, just click it =)
+## Deployment 
+Magic is about to happen, you have to believe...
 [![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/emmanuel-galindo/ml-watchdog.git)
 
 
