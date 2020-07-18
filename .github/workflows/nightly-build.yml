@@ -9,4 +9,4 @@ jobs:
     - name: Trigger our build webhook on Vercel 
       run: curl -s -X POST "https://api.vercel.com/v1/integrations/deploy/{$TOKEN}"
       env:
-        TOKEN: ${{ secrets.NETLIFY_CRON_BUILD_HOOK }}
+        TOKEN: ${{ secrets.VERCEL_DEPLOY_KEY }}
