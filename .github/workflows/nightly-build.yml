@@ -1,0 +1,12 @@
+name: Scheduled build
+on:
+  schedule:
+  - cron: '0 23 * * *'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Trigger our build webhook on Vercel 
+      run: curl -s -X POST "https://api.vercel.com/v1/integrations/deploy/{$TOKEN}"
+      env:
+        TOKEN: ${{ secrets.NETLIFY_CRON_BUILD_HOOK }}
