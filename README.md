@@ -1,4 +1,5 @@
 # ML Watchdog
+![Build status](https://github.com/emmanuel-galindo/ml-watchdog/workflows/Scheduled%20build/badge.svg)
 
 Jamstack offer watcher using next.js, mongodb atlas cloud (via mongoose lib) and RESTful APIs
 Current version only follows MercadoLibre (MELI) articles
