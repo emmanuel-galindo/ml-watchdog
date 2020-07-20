@@ -9,6 +9,6 @@ jobs:
     - name: Process published today 
       run: curl -s -X GET "https://ml-watchdog.vercel.app/api/process-published-today"
     - name: Trigger our build webhook on Vercel 
-      run: curl -s -X GET "https://ml-watchdog.vercel.app/api/process-published-today" && curl -s -X POST "https://api.vercel.com/v1/integrations/deploy/{$TOKEN}"
+      run: curl -s -X POST "https://api.vercel.com/v1/integrations/deploy/{$TOKEN}"
       env:
         TOKEN: ${{ secrets.VERCEL_DEPLOY_KEY }}
