@@ -27,4 +27,17 @@ SearchSchema.virtual('articles', {
   justOne: false // set true for one-to-one relationship
 })
 
+SearchSchema.pre("deleteOne", { document: true }, function(next) {
+  console.log('PRE!')
+  let id = this._id;
+  console.log('id: ' + id)
+  mongoose.model("Article").deleteMany({ searchId: id }, function(err, result) {
+    if (err) {
+      next(err);
+    } else {
+      next();
+    }
+  });
+});
+
 export default mongoose.models.Search || mongoose.model('Search', SearchSchema)

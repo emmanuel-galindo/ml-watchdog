@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
 
-* {
+{
   font-family: 'Open Sans', sans-serif;
   box-sizing: border-box;
 }
@@ -43,7 +43,7 @@
 .card {
   display: inline-block;
   width: 300px;
-  height: 400px;
+  height: 200px;
   overflow: hidden;
   border: 1.25px solid rgb(233, 233, 233);
   border-radius: 16px;
@@ -71,9 +71,12 @@
 }
 
 .card img {
+    width: 160px;
+    height: 160px;
+/*   
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: cover; */
 }
 
 .main-content {
@@ -137,8 +140,8 @@ li {
   text-align: right;
   padding: 10px;
   position: absolute;
-  bottom: 10px;
-  right: 10px;
+  bottom: 70px;
+  right: 100px;
 }
 
 .btn {
@@ -181,4 +184,46 @@ li {
 
 .confirmation-box.show {
   display: block;
+}
+
+/*
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  border: 1px solid #ddd;
+}
+
+th, td {
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even){background-color: #f2f2f2}
+*/
+.article-name {
+  font-weight: bold;
+  font-size: 130%;
+}
+
+h5.article-name {
+  color: white;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  padding: 10px;
+  text-shadow: 0px 0px 4px black;
+}
+
+/* responsive article list */
+.article-list {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.article-item{
+  display: flex;
+  padding: 1rem;
 }

@@ -28,6 +28,18 @@ const ArticleSchema = new mongoose.Schema({
 
     required: [true, 'Please provide an url for this article.'],
     type: String,
+  },
+  thumbnail: {
+    /* Url to article */
+
+    // required: [true, 'Please provide an url for this article.'],
+    type: String,
+  },
+  price: {
+    /* Url to article */
+
+    required: [true, 'Please provide an url for this article.'],
+    type: String,
   }
 },{ timestamps: true })
 

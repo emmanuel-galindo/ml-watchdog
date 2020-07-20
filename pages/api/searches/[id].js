@@ -82,7 +82,11 @@ export default async function handler(req, res) {
 
     case 'DELETE' /* Delete a model by its ID */:
       try {
-        const deletedSearch = await Search.deleteOne({ _id: id })
+        // Calling twice findOne & deleteOne because in "pre" I am not finding the way to retrieve the id
+        // const deletedSearch = await Search.deleteOne({ _id: id })
+        const toDelete = await Search.findOne( {_id: id })
+        const deletedSearch = await toDelete.deleteOne()
+
         if (!deletedSearch) {
           return res.status(400).json({ success: false })
         }

@@ -16,7 +16,7 @@ export default async function handler(req, res) {
           // console.log("Search :" + doc)
           const search = doc.toObject()
           search._id = search._id.toString()
-          const reso = getArticles(search._id, search.url)
+          const reso = saveArticles(search._id, search.url)
           // console.log(JSON.stringify(reso))
           // console.log(util.inspect(reso, {depth: null}))
 
@@ -40,37 +40,57 @@ export default async function handler(req, res) {
     }
   }
 
-  async function getArticles(searchId, url) {
-    console.log("Calling URL: " + url)
+  async function saveArticles(searchId, url) {
     // console.log('search id: ' + searchId )
-    const json = await fetch(url)
-      .then((res) => res.json())
-      .catch(err => console.log("error fetching articles => " + err))
-    // const json = await res.json();
-    // console.log("JSON: " + JSON.stringify(json))
-    const art = json.results.map(  function (result) {
-      const deltaResult = {
-        meliId: result.id,
-        searchId: searchId,
-        title: result.title,
-        url: result.permalink
+    let offset = 0
+    let total = -1 // allow first pass
+
+    while (offset < total || total == -1) {
+      if (offset > 0) {
+        if (url.match('offset')) { 
+          url = url.replace(/offset=(\w+)/, 'offset='+offset ) 
+        } else { 
+          url += '&offset='+offset  
+        }
       }
-      // console.log("Row: " + deltaResult.search)
-      return deltaResult      
-    })
-    try {
-      //const article = await Article.create( art )
-      console.log("Inserting " + art.length + " articles")
-      Article.insertMany(art)
-        .catch(err => console.log('Error insertMany: ' + err))
-        // function(error, docs) {
-        // console.log("insertMany. Inserted articles: " + docs.length)
-        // console.log("Error insertMany: " + error )
-    } catch (error) {
-      console.error(error);
-      return false;
+      console.log("Calling URL: " + url)
+
+      const json = await fetch(url)
+        .then((res) => res.json())
+        .catch(err => console.log("error fetching articles => " + err))
+      // const json = await res.json();
+      // console.log("JSON: " + JSON.stringify(json))
+
+      // Pagination
+      total = json.paging.total
+      offset += json.paging.limit
+
+      // Prepare 
+      const art = json.results.map(  function (result) {
+        const deltaResult = {
+          meliId: result.id,
+          searchId: searchId,
+          title: result.title,
+          url: result.permalink,
+          thumbnail: result.thumbnail,
+          price: result.price
+        }
+        // console.log("Row: " + deltaResult.search)
+        return deltaResult      
+      })
+      try {
+        //const article = await Article.create( art )
+        console.log("Inserting " + art.length + " articles")
+        Article.insertMany(art,{ ordered: false })
+          .catch(err => console.log('Error insertMany: ' + err))
+          // console.log("insertMany. Inserted articles: " + docs.length)
+          // console.log("Error insertMany: " + error )
+      } catch (error) {
+        console.error(error)
+        return false
+      }
     }
 
-    return true;
+    return true
 
   }

@@ -6,11 +6,36 @@ import { useRouter } from 'next/router'
 
 const ArticleIndex = ({ articles }) => (
   <>
-    {
+    <ul className="article-list">
+    {/* <table>
+      <tr>
+      <th>title</th>
+      <th></th>
+      </tr> */}
+    {/*
       articles.map((article) => (
+      // <div key={article._id}>
+        <tr>
+          <td><img src={article.thumbnail} /></td>
+          <td><a href={article.url}>{article.title}</a></td>
+          <td></td>
+          <td>
+            <Link href="/[id]/articles/[pid]" as={`/${article.searchId}/articles/${article._id}`}>
+              <button className="btn view">View</button>
+            </Link>
+          </td>
+        </tr>
+
+      // </div>
+      ))
+      */}
+      {
+      articles.map((article) => (
+      <li className="article-item">
       <div key={article._id}>
         <div className="card">
           <h5 className="article-name">{article.title}</h5>
+          <img className="article-thumbnail" src={article.thumbnail} />
           <div className="main-content">
             <p className="article-name">{article.title}</p>
             <p className="url">Url: {article.url}</p>
@@ -20,7 +45,11 @@ const ArticleIndex = ({ articles }) => (
           </div>
         </div>
       </div>
-    ))}
+      </li>
+      ))}
+    
+    {/* </table> */}
+    </ul>
   </>
 )
 
@@ -44,7 +73,8 @@ export async function getStaticProps({params}) {
   await dbConnect()
 
   /* find all the data in our database */
-  const result = await Article.find({searchId: params.id}) /* find all the data in our database */
+  const result = await Article.find({searchId: params.id})
+    // .sort('-createdAt')
   const articles = result.map((doc) => {
     const article = doc.toObject()
     article._id = article._id.toString()
