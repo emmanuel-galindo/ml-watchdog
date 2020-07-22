@@ -42,7 +42,7 @@
 /* Styles for Cards */
 .card {
   display: inline-block;
-  width: 300px;
+  width: 200px;
   height: 200px;
   overflow: hidden;
   border: 1.25px solid rgb(233, 233, 233);
